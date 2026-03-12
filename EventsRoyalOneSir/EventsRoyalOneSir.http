@@ -1,0 +1,6 @@
+@EventsRoyalOneSir_HostAddress = http://localhost:5054
+
+GET {{EventsRoyalOneSir_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
