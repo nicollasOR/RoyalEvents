@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EventsRoyalOneSir.Domains;
+namespace EventsRoyalOneSirR.Domains;
 
 public partial class Inscrição
 {
