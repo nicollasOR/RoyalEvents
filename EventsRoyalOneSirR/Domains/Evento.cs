@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EventsRoyalOneSir.Domains;
+namespace EventsRoyalOneSirR.Domains;
 
 public partial class Evento
 {
@@ -12,6 +12,8 @@ public partial class Evento
     public DateTime DataEvento { get; set; }
 
     public string Localizacao { get; set; } = null!;
+
+    public bool? StatusEvento { get; set; }
 
     public virtual ICollection<Inscrição> Inscrição { get; set; } = new List<Inscrição>();
 }

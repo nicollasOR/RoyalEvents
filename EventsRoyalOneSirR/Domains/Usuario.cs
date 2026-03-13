@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EventsRoyalOneSir.Domains;
+namespace EventsRoyalOneSirR.Domains;
 
 public partial class Usuario
 {
@@ -16,6 +16,8 @@ public partial class Usuario
     public byte[] Senha { get; set; } = null!;
 
     public string? Especialidade { get; set; }
+
+    public bool? StatusUsuario { get; set; }
 
     public virtual ICollection<Inscrição> Inscrição { get; set; } = new List<Inscrição>();
 

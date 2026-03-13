@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using EventsRoyalOneSir.Domains;
+using EventsRoyalOneSirR.Domains;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventsRoyalOneSir.Contexts;
+namespace EventsRoyalOneSirR.Contexts;
 
-public partial class EventsRoyalOneSirContext : DbContext
+public partial class EventsRoyalOneSirRContext : DbContext
 {
-    public EventsRoyalOneSirContext()
+    public EventsRoyalOneSirRContext()
     {
     }
 
-    public EventsRoyalOneSirContext(DbContextOptions<EventsRoyalOneSirContext> options)
+    public EventsRoyalOneSirRContext(DbContextOptions<EventsRoyalOneSirRContext> options)
         : base(options)
     {
     }
@@ -27,6 +27,7 @@ public partial class EventsRoyalOneSirContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=EventsRoyalOneSir;Trusted_Connection=True;TrustServerCertificate=True");
+    //"Server=(localdb)\\MSSQLLocalDB;Database=EventsRoyalOneSirRR;Trusted_Connection=True;TrustServerCertificate=True"
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,9 +35,12 @@ public partial class EventsRoyalOneSirContext : DbContext
         {
             entity.HasKey(e => e.EventoId).HasName("PK__Evento__1EEB5921581160ED");
 
+            entity.ToTable(tb => tb.HasTrigger("trg_desabilitarEvento"));
+
             entity.Property(e => e.DataEvento).HasPrecision(0);
             entity.Property(e => e.Localizacao).HasMaxLength(50);
             entity.Property(e => e.Nome).HasMaxLength(40);
+            entity.Property(e => e.StatusEvento).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Inscrição>(entity =>
@@ -69,12 +73,15 @@ public partial class EventsRoyalOneSirContext : DbContext
         {
             entity.HasKey(e => e.UsuarioId).HasName("PK__Usuario__2B3DE7B878522959");
 
+            entity.ToTable(tb => tb.HasTrigger("trg_exclusaoUsuario"));
+
             entity.HasIndex(e => e.Email, "UQ__Usuario__A9D1053439FE0483").IsUnique();
 
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Especialidade).HasMaxLength(70);
             entity.Property(e => e.Nome).HasMaxLength(70);
             entity.Property(e => e.Senha).HasMaxLength(32);
+            entity.Property(e => e.StatusUsuario).HasDefaultValue(true);
 
             entity.HasOne(d => d.TipoUsuarioNavigation).WithMany(p => p.Usuario)
                 .HasForeignKey(d => d.TipoUsuario)
