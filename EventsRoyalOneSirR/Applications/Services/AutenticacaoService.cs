@@ -45,10 +45,15 @@ namespace EventsRoyalOneSirR.Applications.Services
                 throw new DomainException("Email ou senha inválidos.");
 
             //gerando o token
-
+            if (usuario.TipoUsuarioNavigation.Tipo_de_Usuario != "Administrador")
+                throw new DomainException("Usuario inválido");
             var token = _tokenJWT.gerarToken(usuario);
 
-            TokenDTO novoToken = new TokenDTO { Token = token };
+            TokenDTO novoToken = new TokenDTO 
+            {
+                Token = token 
+                
+            };
 
             return novoToken;
 

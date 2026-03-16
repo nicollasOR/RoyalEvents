@@ -1,6 +1,7 @@
 ﻿using EventsRoyalOneSirR.Applications.DTOs.UsuarioDTO;
 using EventsRoyalOneSirR.Applications.Services;
 using EventsRoyalOneSirR.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -60,7 +61,9 @@ namespace EventsRoyalOneSirR.Controllers
             }
         }
 
+         //[Authorize(Roles = "Administrador")]
         [HttpPost]
+        //[Authorize]
         public ActionResult<LerUsuarioDTO> Adicionar(CriarUsuarioDTO criarDTO)
         {
             try

@@ -21,6 +21,7 @@ namespace EventsRoyalOneSirR.Controllers
 
 
         [HttpPost("login")]
+        //colocar um método HTTP que ele confere se o usuario é Administrador
         public ActionResult<TokenDTO> Login(LoginDTO _loginDto)
         {
             try

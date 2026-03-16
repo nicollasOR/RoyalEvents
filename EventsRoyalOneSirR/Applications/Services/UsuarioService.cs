@@ -24,7 +24,8 @@ namespace EventsRoyalOneSirR.Applications.Services
                 UsuarioId = usuario.UsuarioId,
                 Nome = usuario.Nome,
                 Especialidade = usuario.Especialidade,
-                UsuarioStatus = usuario.StatusUsuario ?? true
+                UsuarioStatus = usuario.StatusUsuario ?? true,
+                TipoUsuario = usuario.TipoUsuarioNavigation?.Tipo_de_Usuario 
             };
 
             return lerDto;
@@ -94,14 +95,18 @@ namespace EventsRoyalOneSirR.Applications.Services
         {
             validarEmail(criarDTO.Email);
             validarNome(criarDTO.Nome);
-            if (string.IsNullOrEmpty(criarDTO.Email))
+            //if (string.IsNullOrEmpty(criarDTO.Email))
+            if(_repository.EmailExiste(criarDTO.Email))
                 throw new DomainException("Usuário já existente");
 
             Usuario? usuario = new Usuario
             {
                 Nome = criarDTO.Nome,
+                Email = criarDTO.Email,
                 Senha = HashSenha(criarDTO.Senha),
-                StatusUsuario = true
+                Especialidade = criarDTO.Especialidade,
+                TipoUsuario = criarDTO.TipoUsuario,
+                StatusUsuario = true,
             };
 
             _repository.Adicionar(usuario);
@@ -125,9 +130,10 @@ namespace EventsRoyalOneSirR.Applications.Services
                 throw new DomainException("Já existe um usuário com esse email");
 
             usuarioBanco.Nome = criarDTO.Nome;
-            usuarioBanco.Especialidade = usuarioBanco.Especialidade;
-            usuarioBanco.Email = usuarioBanco.Email;
+            usuarioBanco.Especialidade = criarDTO.Especialidade;
+            usuarioBanco.Email = criarDTO.Email;
             usuarioBanco.Senha = HashSenha(criarDTO.Senha);
+            usuarioBanco.TipoUsuario = criarDTO.TipoUsuario;
 
             _repository.Atualizar(usuarioBanco);
             return LerDTO(usuarioBanco);

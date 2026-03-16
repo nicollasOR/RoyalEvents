@@ -59,6 +59,8 @@ namespace EventsRoyalOneSirR.Applications.Autenticacao
             new Claim(ClaimTypes.NameIdentifier, usuario.UsuarioId.ToString()),
             new Claim(ClaimTypes.Name, usuario.Nome.ToString()),
             new Claim(ClaimTypes.Email, usuario.Email.ToString())
+            //,
+            //new Claim(ClaimTypes.Role, usuario.TipoUsuarioNavigation.Tipo_de_Usuario)
             };
 
             // criar nosso token jwt agora

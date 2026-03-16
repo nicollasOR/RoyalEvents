@@ -1,6 +1,7 @@
 ﻿using EventsRoyalOneSirR.Interfaces;
 using EventsRoyalOneSirR.Domains;
 using EventsRoyalOneSirR.Contexts;
+using Microsoft.EntityFrameworkCore;
 namespace EventsRoyalOneSirR.Repository
 {
     public class UsuarioRepository : IUsuarioRepository
@@ -14,18 +15,24 @@ namespace EventsRoyalOneSirR.Repository
 
         public List<Usuario> Listar()
         {
-            return _context.Usuario.ToList();
+            return _context.Usuario
+                .Include(tipoUser => tipoUser.TipoUsuarioNavigation)
+                .ToList();
         }
 
 
         public Usuario? ObterPorId(int id)
         {
-            return _context.Usuario.Find(id);
+            return _context.Usuario
+                .Include(u => u.TipoUsuarioNavigation)
+                .FirstOrDefault(usuarioId => usuarioId.UsuarioId == id);
         }
 
         public Usuario? ObterPorEmail(string email)
         {
-            return _context.Usuario.FirstOrDefault(emailAux => emailAux.Email == email);
+            return _context.Usuario
+                .Include(usuarioTipo => usuarioTipo.TipoUsuarioNavigation)
+                .FirstOrDefault(emailAux => emailAux.Email == email);
         }
 
 
@@ -54,6 +61,7 @@ namespace EventsRoyalOneSirR.Repository
             usuarioBanco.Nome = usuario.Nome;
             usuarioBanco.Senha = usuario.Senha;
             usuarioBanco.Especialidade = usuario.Especialidade;
+            usuarioBanco.TipoUsuario = usuario.TipoUsuario;
 
             _context.SaveChanges();
         }

@@ -8,6 +8,6 @@
         public string Senha { get; set; } = null!;
         public string Especialidade { get; set; } = null!;
         public bool UsuarioStatus { get; set; }
-
+        public string TipoUsuario { get; set; } = null!;
     }
 }
