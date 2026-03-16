@@ -105,7 +105,7 @@ namespace EventsRoyalOneSirR.Applications.Services
                 Email = criarDTO.Email,
                 Senha = HashSenha(criarDTO.Senha),
                 Especialidade = criarDTO.Especialidade,
-                TipoUsuario = criarDTO.TipoUsuario,
+                TipoUsuario = criarDTO.TipoUsuario ?? 3, // tenta ver de quando for null, virar participante
                 StatusUsuario = true,
             };
 
